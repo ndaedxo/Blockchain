@@ -1,0 +1,40 @@
+<!-- Blockchain\DIDBlockchain\webapp\templates\transaction_detail.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-6">Transaction Details</h1>
+            <div class="bg-white rounded-lg shadow-lg p-6 space-y-4">
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="border-b pb-2">
+                        <p class="text-sm text-gray-500">Transaction ID</p>
+                        <p class="font-medium">{{ transaction.id }}</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-sm text-gray-500">Sender</p>
+                        <p class="font-medium">{{ transaction.sender }}</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-sm text-gray-500">Receiver</p>
+                        <p class="font-medium">{{ transaction.receiver }}</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-sm text-gray-500">Amount</p>
+                        <p class="font-medium">{{ transaction.amount }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Status</p>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if transaction.status == 'completed' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                            {{ transaction.status }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'transactions' %}" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm font-medium text-gray-700 transition-colors">
+            ← Back to Transactions
+        </a>
+    </div>
+</div>
+{% endblock %}

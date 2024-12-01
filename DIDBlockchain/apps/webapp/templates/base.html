@@ -1,0 +1,80 @@
+<!-- Blockchain\DIDBlockchain\webapp\templates\base.html -->
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DID Blockchain Platform</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    {% load static %}
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="h-full">
+    <div class="min-h-full">
+        <!-- Sidebar -->
+        <div class="fixed inset-y-0 left-0 w-64 bg-gray-900">
+            <div class="flex h-16 items-center justify-start px-6">
+                <span class="text-2xl font-bold text-white">DID Platform</span>
+            </div>
+            <nav class="mt-6">
+                <div class="space-y-1 px-3">
+                    <a href="{% url 'dashboard' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-white hover:bg-gray-700">
+                        <i class="fas fa-chart-line mr-3 h-6 w-6"></i>
+                        Dashboard
+                    </a>
+                    <a href="{% url 'blocks' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-cube mr-3 h-6 w-6"></i>
+                        Blockchain Explorer
+                    </a>
+                    <a href="{% url 'transactions' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-exchange-alt mr-3 h-6 w-6"></i>
+                        Transactions
+                    </a>
+                    <a href="{% url 'validators' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-user-shield mr-3 h-6 w-6"></i>
+                        Validators
+                    </a>
+                    <a href="{% url 'users' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-users mr-3 h-6 w-6"></i>
+                        Users
+                    </a>
+                    <a href="{% url 'wallet' %}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 hover:text-white">
+                        <i class="fas fa-wallet mr-3 h-6 w-6"></i>
+                        Wallet
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main content -->
+        <div class="pl-64">
+            <!-- Top header -->
+            <div class="bg-white shadow-sm">
+                <div class="flex h-16 items-center justify-between px-6">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-semibold text-gray-900">{% block page_title %}Dashboard{% endblock %}</h1>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="relative ml-3">
+                            <div class="flex items-center">
+                                <button type="button" class="flex items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button">
+                                    <img class="h-8 w-8 rounded-full" src="/api/placeholder/32/32" alt="User avatar">
+                                    <span class="ml-3 text-sm font-medium text-gray-700">{{ request.user.username }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content area -->
+            <main class="py-6">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    {% block content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

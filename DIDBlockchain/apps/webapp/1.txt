@@ -1,0 +1,164 @@
+# DIDBlockchain\apps\webapp\views.py
+import requests  # Add this import for making API calls
+import json
+import logging
+from rest_framework.authtoken.models import Token
+
+from django.views.generic import TemplateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse, Http404
+from django.contrib.auth import authenticate, login
+from django.views import View
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, get_object_or_404
+from django.db import IntegrityError
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
+from apps.blockchain.models import DIDTransaction, Validator as ValidatorModel
+from apps.api.serializers.TransactionSerializer import TransactionSerializer
+from apps.api.serializers.ValidatorSerializer import ValidatorSerializer
+from apps.wallet.models import Wallet
+CustomUser = get_user_model()
+# Set up logging
+logger = logging.getLogger(__name__)
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = "dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        token = getattr(self.request.user, 'auth_token', None)
+
+        if not token:
+            # Handle the case where the token doesn't exist
+            context['error'] = "User is not authenticated."
+            return context
+
+        # Fetch dashboard stats from the API
+        response = requests.get('http://localhost:8000/api/stats/', headers={'Authorization': f'Token {token}'})
+        stats = response.json()
+
+        context.update({
+            'chain_length': stats['total_blocks'],
+            'pending_transactions': stats['pending_transactions'],
+            'recent_blocks': stats.get('recent_blocks', []),  # Assuming the API provides this
+            'is_validator': self.request.user.username in stats.get('active_validators', []),  # Adjust as necessary
+        })
+        return context
+
+
+class BlockListView(LoginRequiredMixin, ListView):
+    permission_classes = [IsAuthenticated]
+    template_name = "blocks.html"
+    context_object_name = "blocks"
+    paginate_by = 20
+
+    def get_queryset(self):
+         # Check if the user has an auth token
+        if not hasattr(request.user, 'auth_token'):
+            return Response({'error': 'User does not have an auth token.'}, status=403)
+
+        response = requests.get('http://localhost:8000/api/blocks/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        return response.json()  # Return the list of blocks
+
+class BlockDetailView(LoginRequiredMixin, DetailView):
+    template_name = "block_detail.html"
+    context_object_name = "block"
+
+    def get_object(self):
+        index = self.kwargs.get('index')
+        response = requests.get(f'http://localhost:8000/api/blocks/{index}/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        if response.status_code == 200:
+            return response.json()
+        raise Http404("Block not found")
+
+class TransactionListView(LoginRequiredMixin, ListView):
+    template_name = "transactions.html"
+    context_object_name = "transactions"
+
+    def get_queryset(self):
+        response = requests.get('http://localhost:8000/api/transactions/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        return response.json()  # Fetch transactions from the API
+
+    def post(self, request):
+        data = json.loads(request.body)
+        response = requests.post('http://localhost:8000/api/transactions/', json=data, headers={'Authorization': f'Token {request.user.auth_token}'})
+
+        if response.status_code == 201:
+            return JsonResponse({'id': response.json()['transaction_id']}, status=201)
+        return JsonResponse({'errors': response.json()}, status=response.status_code)
+
+class TransactionDetailView(LoginRequiredMixin, DetailView):
+    template_name = "transaction_detail.html"
+    context_object_name = "transaction"
+
+    def get_object(self):
+        transaction_id = self.kwargs.get('id')
+        response = requests.get(f'http://localhost:8000/api/transactions/{transaction_id}/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        if response.status_code == 200:
+            return response.json()
+        raise Http404("Transaction not found")
+
+class ValidatorListView(LoginRequiredMixin, ListView):
+    template_name = "validators.html"
+    context_object_name = "validators"
+
+    def get_queryset(self):
+        response = requests.get('http://localhost:8000/api/validators/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        return response.json()  # Fetch validators from the API
+
+class ValidatorDetailView(LoginRequiredMixin, DetailView):
+    template_name = "validator_detail.html"
+    context_object_name = "validator"
+
+    def get_object(self):
+        validator_id = self.kwargs.get('id')
+        response = requests.get(f'http://localhost:8000/api/validators/{validator_id}/', headers={'Authorization': f'Token {self.request.user.auth_token}'})
+        if response.status_code == 200:
+            return response.json()
+        raise Http404("Validator not found")
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')  # Create this template for GET requests
+
+    def post(self, request):
+        data = json.loads(request.body)
+        user = authenticate(username=data['username'], password=data['password'])
+        if user is not None:
+            login(request, user)
+            token, created = Token.objects.get_or_create(user=user)  # Get or create token
+            return JsonResponse({'success': True, 'token': token.key})  # Return token
+        return JsonResponse({'success': False, 'message': 'Invalid credentials'}, status=401)
+
+
+class RegisterView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        try:
+            user = CustomUser.objects.create_user(username=data['username'], password=data['password'])
+            Token.objects.create(user=user)  # Create a token for the user
+            return JsonResponse({'success': True})
+        except IntegrityError:
+            return JsonResponse({'success': False, 'message': 'Username already exists'}, status=400)
+
+def users_list(request):
+    users = CustomUser.objects.all()
+    return render(request, 'users.html', {'users': users})
+
+def user_detail(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'user_detail.html', {'user': user})
+
+class WalletView(LoginRequiredMixin, TemplateView):
+    template_name = "wallet.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        wallet = get_object_or_404(Wallet, user=self.request.user)
+        context['balance'] = float(wallet.balance)
+        context['transactions'] = wallet.transaction_history  # Assuming it's already in the wallet model
+        context['wallet_address'] = wallet.wallet_address
+        return context

@@ -1,0 +1,34 @@
+1. API Views (api/views.py):
+
+BlockchainViewSet: Handles blockchain operations (viewing chain, blocks)
+TransactionViewSet: Manages identity verification transactions
+ValidatorViewSet: Handles validator registration and management
+
+
+2. Serializers (api/serializers.py):
+
+Serializers for Blocks, Transactions, and Validator registration
+Handles data validation and conversion between Python objects and JSON
+
+
+3. URL Configuration (urls.py):
+
+Sets up the API endpoints using DRF's router
+Includes authentication URLs and admin interface
+
+
+4. Authentication (api/authentication.py):
+
+Custom authentication class for the blockchain system
+Handles user authentication and keypair management
+
+
+
+The API provides these endpoints:
+
+GET /api/blockchain/: List all blocks in the chain
+GET /api/blockchain/{index}/: Get a specific block
+GET /api/blockchain/pending_transactions/: List pending transactions
+GET /api/blockchain/chain_status/: Get current blockchain status
+POST /api/transactions/: Create a new identity verification transaction
+POST /api/validators/: Register as a validator

@@ -1,0 +1,22 @@
+1. Validator Implementation (blockchain/validator.py):
+
+-Core validator functionality including stake management
+-Block signing and verification
+-Reward distribution
+-Slashing mechanism
+
+
+2. Blockchain Tests (tests/test_blockchain.py):
+
+-Tests for core blockchain functionality
+-Transaction and block validation
+-Consensus mechanism testing
+-Validator reward distribution
+
+
+3. API Tests (tests/test_api.py):
+
+-Tests for all API endpoints
+-Authentication testing
+-Transaction creation and validation
+-Validator registration

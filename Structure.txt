@@ -1,0 +1,157 @@
+DIDBlockchain/
+│
+├── DIDBlockchain/
+│   ├── __init__.py
+│   ├── settings.py                  # Django project settings
+│   ├── urls.py                     # Main URL configuration for the project
+│   ├── wsgi.py                      # WSGI entry point for deployment
+│   └── asgi.py                      # ASGI entry point for async deployment
+│
+├── apps/
+│   ├── blockchain/                  # Source code for the blockchain application
+│   │   ├── __init__.py
+│   │   ├── logic/
+│   │   │   ├──transaction_logic.py # Transaction data structure
+│   │   ├── blockchain.py            # Blockchain implementation
+│   │   ├── block.py                 # Block data structure
+│   │   ├── transaction.py           
+│   │   ├── consensus.py             # Proof of Stake implementation
+│   │   ├── validator.py             # Validator management
+│   │   └── security.py              # Security features (hashing, signatures, etc.)
+│   │
+│   ├── api/                         # API for external interaction
+│   │   ├── __init__.py
+│   │   ├── views.py                 # API view functions
+│   │   ├── urls.py                  # URL routing for the API
+│   │   ├── serializers/          # Data serialization and deserialization
+│   │   │   ├── BlockSerializer.py
+│   │   │   ├── DIDDocumentSerializer.py
+│   │   │   ├── DIDDocumentServiceSerializer.py
+│   │   │   ├── TransactionSerializer.py
+│   │   │   ├── ValidatorSerializer.py
+│   │   ├── secure_storage.py
+│   │   └── authentication.py        # Authentication logic for users and validators
+│   │
+│   ├── utils/                       # Utility functions
+│   │   ├── __init__.py
+│   │   ├── config.py                # Configuration settings (database, ports, etc.)
+│   │   ├── logger.py                # Logging setup
+│   │   └── helpers.py               # Helper functions
+│   │
+│   ├── webapp/                      # Django web application
+│   │   ├── __init__.py
+│   │   ├── views.py                 # Views for rendering templates
+│   │   ├── urls.py                  # URL routing for the web app
+│   │   ├── static/                  # Static files (CSS, JS, images)
+│   │   └── templates/               # HTML templates for rendering UI
+│   │
+│   ├── tests/                       # Unit and integration tests
+│   │   ├── __init__.py
+│   │   ├── test_blockchain.py       # Tests for blockchain functionality
+│   │   ├── test_api.py              # Tests for API endpoints
+│   │   └── test_security.py         # Tests for security features
+│   │
+│   ├── docs/                        # Documentation for the project
+│   │   ├── index.md                 # Main documentation file (introduction, setup, usage)
+│   │   ├── architecture.md          # Detailed architecture description
+│   │   └── api_reference.md         # API endpoint documentation
+│   │
+│   └── wallet/                      # Wallet management (new module)
+│       ├── __init__.py
+│       ├── models.py                # Wallet-related models
+│       ├── views.py                 # Views for wallet functionalities
+│       ├── urls.py                  # URL routing for wallet features
+│       └── serializers.py           # Serializers for wallet-related data
+│
+├── requirements.txt                 # Python package dependencies
+├── manage.py                        # Django's command-line utility for administrative tasks
+├── README.md                        # Project overview and setup instructions
+└── LICENSE                          # License information
+
+
+
+Directory and File Descriptions
+1. blockchain/
+This directory contains the core functionality of your blockchain application.
+
+blockchain.py: Contains the main blockchain implementation, including methods for adding blocks and transactions.
+block.py: Defines the structure of a block, including attributes like index, timestamp, and transactions.
+transaction.py: Defines the structure of a transaction, handling the identity verification data.
+consensus.py: Implements the Proof of Stake consensus mechanism, including validator selection and rewards.
+validator.py: Manages the list of validators, their stakes, and their roles in the validation process.
+security.py: Contains security-related functions, such as hashing, digital signatures, and encryption.
+2. api/
+This directory handles the API for external interactions with your blockchain application.
+
+views.py: Contains API view functions that handle incoming requests and responses.
+urls.py: Defines the URL routing for the API endpoints and connects them to their respective view functions.
+serializers.py: Handles data serialization for API requests and responses, ensuring data is formatted correctly.
+authentication.py: Implements authentication logic for users and validators, including token generation and validation.
+3. utils/
+Utility functions that assist in various tasks throughout your application.
+
+config.py: Stores configuration settings such as database connections and server ports.
+logger.py: Configures logging for the application, helping with debugging and monitoring.
+helpers.py: Contains miscellaneous helper functions used throughout the application.
+4. webapp/
+This directory contains your Django web application code.
+
+views.py: Handles views for rendering templates and serving web pages.
+urls.py: Defines the URL routing for the web application, linking URLs to views.
+static/: Directory for static files like CSS stylesheets, JavaScript files, and images.
+templates/: Directory for HTML templates used for rendering the user interface.
+5. tests/
+Contains unit and integration tests for the application, ensuring code quality.
+
+test_blockchain.py: Tests for blockchain-related functionalities.
+test_api.py: Tests for the API endpoints to ensure correct responses and behavior.
+test_security.py: Tests for security features, like hashing and authentication.
+6. docs/
+Documentation for the project helps other developers understand how to use and contribute to it.
+
+index.md: Main entry point for the documentation, including setup and usage instructions.
+architecture.md: Detailed description of the system architecture, components, and interactions.
+api_reference.md: Documentation of API endpoints, request/response formats, and usage examples.
+7. Root Files
+requirements.txt: Lists the Python package dependencies needed to run the application.
+manage.py: Django's command-line utility for administrative tasks.
+settings.py: Configuration settings for your Django project.
+urls.py: Main URL configuration for the Django project.
+wsgi.py: WSGI entry point for deployment.
+README.md: Provides an overview of the project, how to install it, and basic usage instructions.
+LICENSE: Specifies the license under which the project is distributed.
+Conclusion
+This directory structure is designed to keep your identity verification blockchain organized, making it easier to develop, maintain, and scale within a Django framework. Adjustments can be made based on specific needs or preferences, but this serves as a solid foundation for your project. If you have any questions or need further guidance, feel free to ask!
+
+
+Admin
+
+webapp/
+├── __init__.py
+├── views.py                 # Django views for rendering templates
+├── urls.py                  # URL routing for the web app
+├── static/                  # Static files (CSS, JS, images)
+│   ├── css/                 # Custom CSS styles
+│   ├── js/                  # Custom JavaScript files
+│   └── images/              # Images for the UI
+├── templates/               # HTML templates for rendering UI
+│   ├── base.html            # Base template for layout
+│   ├── dashboard.html       # Dashboard page
+│   ├── blocks.html          # Blockchain explorer page
+│   ├── block_detail.html
+│   ├── transactions.html     # Transactions management page
+│   ├── transaction_detail.html
+│   ├── validators.html       # Validators management page
+│   ├── validator_detail.html
+│   ├── register.html
+│   ├── login.html
+│   ├── users.html           # Users management page
+│   └── user_detail.html 
+Front-End Design Overview
+User Interface (UI) Layout
+
+Dashboard: Display blockchain statistics (e.g., total blocks, total transactions, validators).
+Blockchain Explorer: Show a list of blocks with details (index, timestamp, transactions).
+Transaction Management: Interface for creating and viewing transactions.
+Validator Management: Display validators, their stakes, and status.
+User Authentication: Login and registration forms for users and validators.

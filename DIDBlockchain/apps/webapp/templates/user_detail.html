@@ -1,0 +1,125 @@
+<!-- webapp/templates/user_detail.html -->
+{% extends 'base.html' %}
+
+{% block page_title %}User Details{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- User Profile Card -->
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <div class="flex items-center">
+                    <div class="h-16 w-16 flex-shrink-0">
+                        <img class="h-16 w-16 rounded-full" src="/api/placeholder/64/64" alt="Profile photo">
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ user.username }}</h3>
+                        <p class="text-sm text-gray-500">User ID: {{ user.id }}</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex space-x-3 sm:mt-0">
+                    <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <i class="fas fa-edit mr-2"></i>
+                        Edit Profile
+                    </button>
+                    <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <i class="fas fa-key mr-2"></i>
+                        Reset Password
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-6 border-t border-gray-200">
+                <dl class="divide-y divide-gray-200">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ user.email }}</dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Role</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <span class="inline-flex items-center rounded-md bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800">
+                                {{ user.role }}
+                            </span>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Status</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <span class="inline-flex items-center rounded-md bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800">
+                                {{ user.status }}
+                            </span>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Wallet Address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <code class="rounded bg-gray-100 px-2 py-1 font-mono text-sm">{{ user.wallet_address }}</code>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Public Key</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <code class="rounded bg-gray-100 px-2 py-1 font-mono text-sm break-all">{{ user.public_key }}</code>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Balance</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <div class="flex items-center">
+                                <span class="text-2xl font-semibold">{{ user.balance }}</span>
+                                <span class="ml-2 text-gray-500">tokens</span>
+                            </div>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                        <dt class="text-sm font-medium text-gray-500">Last Active</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {{ user.last_active_timestamp }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Recent Activity</h3>
+            <div class="mt-6 flow-root">
+                <ul role="list" class="-mb-8">
+                    <li>
+                        <div class="relative pb-8">
+                            <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                            <div class="relative flex space-x-3">
+                                <div>
+                                    <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                                        <i class="fas fa-exchange-alt text-white"></i>
+                                    </span>
+                                </div>
+                                <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Completed transaction <span class="font-medium text-gray-900">#12345</span></p>
+                                    </div>
+                                    <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                        <time datetime="2024-10-21">1 hour ago</time>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Add more activity items as needed -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

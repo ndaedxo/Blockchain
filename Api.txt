@@ -1,0 +1,14 @@
+You can access:
+
+API endpoints at http://localhost:8000/api/
+API documentation at http://localhost:8000/docs/
+Admin interface at http://localhost:8000/admin/
+
+The API will provide endpoints for:
+
+Viewing blocks: /api/blocks/
+Viewing transactions: /api/transactions/
+Creating transactions: /api/create-transaction/
+Managing validators: /api/validators/
+Managing DID documents: /api/did-documents/
+Getting blockchain info: /api/blockchain-info/

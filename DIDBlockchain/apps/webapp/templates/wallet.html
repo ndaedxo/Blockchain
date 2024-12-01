@@ -1,0 +1,33 @@
+{% extends "base.html" %}  <!-- Adjust based on your project's base template -->
+
+{% block content %}
+<h1>Your Wallet</h1>
+<p>Wallet Address: {{ wallet_address }}</p>
+<p>Balance: {{ balance }}</p>
+
+<h2>Transaction History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.transaction_id }}</td> <!-- Adjust based on your transaction representation -->
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.date }}</td>  <!-- Adjust according to your transaction model -->
+            <td>{{ transaction.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No transactions found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

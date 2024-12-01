@@ -1,0 +1,22 @@
+{
+  "name": "didblockchain",
+  "version": "1.0.0",
+  "description": "The DID (Decentralized Identifier) Blockchain is a specialized blockchain implementation focused on managing decentralized identifiers. This document outlines the system's architecture, components, and their interactions.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  }
+}

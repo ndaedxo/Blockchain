@@ -1,0 +1,37 @@
+Common User Attributes
+1.Public Key:
+
+A cryptographic key that is used to receive funds or verify signatures. It is typically derived from the private key.
+2.Private Key:
+
+A secret key that is used to sign transactions and prove ownership of the associated public key. It should be kept secure and private.
+3.Username or User ID:
+
+An identifier that can be used to refer to the user. This can be an alias or a more user-friendly name.
+4.Email Address:
+
+Used for communication or verification purposes, especially in systems that require registration or identity verification.
+5.Wallet Address:
+
+A unique identifier that allows users to send and receive cryptocurrency or tokens on the blockchain.
+6.Balance:
+
+The amount of cryptocurrency or tokens held by the user in their wallet.
+7.Transaction History:
+
+A record of all transactions made by the user, including timestamps, amounts, and other relevant details.
+8.Role or Permission Level:
+
+Defines what actions a user can perform on the blockchain. In a permissioned blockchain, roles might include admin, validator, or regular user.
+9.Status:
+
+Indicates whether the user is active, suspended, or banned. This can be useful for managing user access and permissions.
+1o.KYC Information (for regulated environments):
+
+Know Your Customer (KYC) details, such as name, address, date of birth, etc., may be required for regulatory compliance.
+11.Token Ownership:
+
+Information about any tokens or assets owned by the user, especially in ecosystems that allow for asset representation.
+12.Smart Contract Involvement:
+
+Details about any smart contracts the user is involved in, including their roles and responsibilities within those contracts.

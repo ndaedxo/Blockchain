@@ -1,0 +1,4 @@
+1. blockchain.py: The main blockchain implementation that manages blocks, transactions, and validators.
+2. block.py: Defines the Block class that represents individual blocks in the chain.
+3. transaction.py: Implements the Transaction class for handling identity verification data.
+4. settings.py: Django project settings with configurations for both Django and the blockchain.

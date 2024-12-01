@@ -1,0 +1,31 @@
+# DIDBlockchain\docker-compose.yml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1  # Set to 0 in production
+      - RUNNING_IN_DOCKER=True
+      - DB_NAME=DIDBlockchain_db  # Your desired database name
+      - DB_USER=thriftstore_user  # Your database user
+      - DB_PASSWORD=Douvretenser30  # Your database password
+      - DB_HOST=db  # Hostname of the PostgreSQL service
+      - DB_PORT=5432  # Default PostgreSQL port
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=DIDBlockchain_db  # Your desired database name
+      - POSTGRES_USER=thriftstore_user  # Your database user
+      - POSTGRES_PASSWORD=Douvretenser30  # Your database password
+
+volumes:
+  postgres_data:
